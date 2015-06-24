@@ -69,7 +69,11 @@ class CDRLogImport
                 CallingNumber VARCHAR(40),
 				OriginalCalledPartyNum VARCHAR(40),
                 FinalCalledPartyNumber VARCHAR(40),
-				Duration NUMERIC(8,0)
+				Duration NUMERIC(8,0),
+                OrigIP VARCHAR(40),
+                DestIP VARCHAR(40),
+                OrigDev VARCHAR(80),
+                DestDev VARCHAR(80)
             );
         ");
 
@@ -160,7 +164,7 @@ class CDRLogImport
         }
 
         // create a table inserter to insert the parsed values into the table
-        var inserter = m_db.bulkInsert(m_output, "TimeOrigination, CallingNumber, OriginalCalledPartyNum, FinalCalledPartyNumber, Duration");
+        var inserter = m_db.bulkInsert(m_output, "TimeOrigination, CallingNumber, OriginalCalledPartyNum, FinalCalledPartyNumber, Duration, OrigIP, DestIP, OrigDev, DestDev");
  
         // read all the files
         var line = reader.readLine();
@@ -182,6 +186,10 @@ class CDRLogImport
             inserter[2] = lineSplit[29];                     // Original Called Party
             inserter[3] = lineSplit[30];                     // Final Called Party
             inserter[4] = lineSplit[55];                     // Duration
+            inserter[5] = lineSplit[80];                  // original ipv4 or v6 address
+            inserter[6] = lineSplit[81];                    // Dest ipv4 or v6 address
+            inserter[7] = lineSplit[56];                    // Originating Device name
+            inserter[8] = lineSplit[57];                    // Destination Device Name
 
 			
             inserter.insertRow();
