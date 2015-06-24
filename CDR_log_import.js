@@ -110,6 +110,7 @@ class CDRLogImport
 				OriginalCalledPartyNum VARCHAR(40),
 				FinalCalledPartyNumber VARCHAR(40),
                 DestDev VARCHAR(80),
+                Duration NUMERIC(8,0)
 				HMS VARCHAR(20)
 			);
 		");
